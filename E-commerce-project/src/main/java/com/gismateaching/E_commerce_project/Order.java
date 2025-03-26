@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -18,9 +19,8 @@ public class Order {
     private LocalDate order_date;
     private Double total_amount;
     private String o_status;
-    @Column(name = "customer_id", insertable = false, updatable = false)
-    private Integer customer_id;
     private Integer address_id;
+    private LocalDateTime changed_at;
 
 
     public Order() {
@@ -30,8 +30,8 @@ public class Order {
         this.order_date = order_date;
         this.total_amount = total_amount;
         this.o_status = o_status;
-        this.customer_id = customer_id;
         this.address_id = address_id;
+        this.changed_at = LocalDateTime.now();
     }
 
 
@@ -79,13 +79,10 @@ public class Order {
         this.o_status = o_status;
     }
 
-    public Integer getCustomer_id() {
-        return customer_id;
-    }
 
-    public void setCustomer_id(Integer customer_id) {
-        this.customer_id = customer_id;
-    }
+    public void setCustomer(Customer customer) { this.customer = customer; }
+    public Customer getCustomer() { return customer; }
+
 
     public Integer getAddress_id() {
         return address_id;
@@ -95,16 +92,22 @@ public class Order {
         this.address_id = address_id;
     }
 
+    public LocalDateTime getChanged_at() {return changed_at;}
+
+    public void setChanged_at(LocalDateTime changed_at) {
+        this.changed_at = changed_at;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return Objects.equals(order_id, order.order_id) && Objects.equals(order_date, order.order_date) && Objects.equals(total_amount, order.total_amount) && Objects.equals(o_status, order.o_status) && Objects.equals(customer_id, order.customer_id) && Objects.equals(address_id, order.address_id);
+        return Objects.equals(order_id, order.order_id) && Objects.equals(order_date, order.order_date) && Objects.equals(total_amount, order.total_amount) && Objects.equals(o_status, order.o_status) && (customer != null ? customer.equals(order.customer) : order.customer == null) && Objects.equals(address_id, order.address_id) && Objects.equals(changed_at, order.changed_at);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(order_id, order_date, total_amount, o_status, customer_id, address_id);
+        return Objects.hash(order_id, order_date, total_amount, o_status,customer != null ? customer.getCustomer_id() : null , address_id, changed_at);
     }
 
     @Override
@@ -114,8 +117,9 @@ public class Order {
                 ", order_date=" + order_date +
                 ", total_amount=" + total_amount +
                 ", o_status='" + o_status + '\'' +
-                ", customer_id=" + customer_id +
+                ", customer_id=" + (customer != null ? customer.getCustomer_id() : "null") +
                 ", address_id=" + address_id +
+                ", changed_at=" + changed_at +
                 '}';
     }
 

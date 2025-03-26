@@ -8,6 +8,10 @@ import java.util.Optional;
 
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     //get customers order by id
-    @EntityGraph(attributePaths = "orders")
     Optional<Customer> findById(Integer customer_id);
+
+    //@EntityGraph(attributePaths = "orders")
+    //Optional<Customer> findById(Integer customer_id);
+
+
 }

@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/Order")
@@ -24,13 +25,28 @@ public class OrderController {
     }
 
     @PutMapping("/update/{orderId}")
-    public ResponseEntity<String> updateOrder(@PathVariable Integer orderId, @RequestBody OrderService.NewOrderRequest request) {
+    public ResponseEntity<String> updateOrder(
+            @PathVariable Integer orderId,
+            @RequestBody OrderService.NewOrderRequest request) {
         return orderService.updateOrder(orderId, request);
     }
 
     @DeleteMapping("/delete/{orderId}")
-    public ResponseEntity<String> deleteOrder(@PathVariable Integer orderId, @RequestBody OrderService.NewOrderRequest request) {
+    public ResponseEntity<String> deleteOrder(@PathVariable Integer orderId) {
         return orderService.deleteOrder(orderId);
     }
+
+    //Updating order status
+    @PutMapping("/{orderId}/status")
+    public ResponseEntity<String> updateOrderStatus(
+            @PathVariable("orderId") Integer orderId,
+            @RequestBody Map<String, String> request) {
+
+        String newStatus = request.get("newStatus");
+        return orderService.updateOrderStatus(orderId, newStatus);  // Now returns ResponseEntity directly
+    }
+
+
+
 
 }

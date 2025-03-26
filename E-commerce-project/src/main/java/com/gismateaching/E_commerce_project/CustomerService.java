@@ -15,8 +15,11 @@ import java.util.Optional;
 @Service
 public class CustomerService {
     private final CustomerRepository customerRepository;
-    public CustomerService(CustomerRepository customerRepository) {
+    private final OrderRepository orderRepository;
+    public CustomerService(CustomerRepository customerRepository, OrderRepository orderRepository) {
         this.customerRepository = customerRepository;
+        this.orderRepository = orderRepository;
+
     }
     public List<Customer> getCustomer() {
         return customerRepository.findAll();
@@ -61,9 +64,11 @@ public class CustomerService {
     }
 
     @Transactional(readOnly = true)
-    public Customer getCustomerWithOrders(Integer customer_id) {
-        return customerRepository.findById(customer_id)
+    public List<Order> getCustomerOrders(Integer customer_id) {
+        customerRepository.findById(customer_id)
                 .orElseThrow(() -> new RuntimeException("Customer not found with id: " + customer_id));
+
+        return orderRepository.findByCustomerId(customer_id);
     }
 
 }
