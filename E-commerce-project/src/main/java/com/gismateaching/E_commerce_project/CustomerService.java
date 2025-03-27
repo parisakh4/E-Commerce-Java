@@ -53,7 +53,7 @@ public class CustomerService {
         return ResponseEntity.ok("Customer with ID " + customer_id + " updated successfully");
     }
 
-    public ResponseEntity<String> deleteCustomer(@PathVariable("customer_id") Integer customer_id) {
+    public ResponseEntity<String> deleteCustomer(Integer customer_id) {
         if (!customerRepository.existsById(customer_id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .header("X-error","Customer not found")

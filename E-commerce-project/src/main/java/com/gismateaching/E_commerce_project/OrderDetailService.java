@@ -65,7 +65,7 @@ public class OrderDetailService {
 
         // Update the order's changed_at field
         order.setChanged_at(LocalDateTime.now());
-        orderRepository.save(order);  // Persist the change timestamp only
+        orderRepository.save(order);
 
         return ResponseEntity.ok("Order detail added successfully for Order ID: " + request.order_id());
     }

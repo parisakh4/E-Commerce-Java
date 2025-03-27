@@ -95,7 +95,6 @@ public class OrderService {
         return ResponseEntity.ok("Order with ID " + order_id + " deleted successfully!");
     }
 
-
     //---------------------------Order status change defining valid status transitions--------------------------------
 
     private static final Set<String> VALID_STATUSES = Set.of("pending", "completed","failed", "shipped", "delivered", "cancelled");

@@ -46,22 +46,6 @@ public class OrderDetail {
         this.order_detail_id = order_detail_id;
     }
 
-    /*public Integer getOrder_id() {
-        return order_id;
-    }
-
-    public void setOrder_id(Integer order_id) {
-        this.order_id = order_id;
-    }
-
-    public Integer getProduct_id() {
-        return product_id;
-    }
-
-    public void setProduct_id(Integer product_id) {
-        this.product_id = product_id;
-    }*/
-
     public Order getOrder() {
         return order;
     }
